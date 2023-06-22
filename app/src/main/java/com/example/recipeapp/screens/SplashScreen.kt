@@ -39,14 +39,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.recipeapp.R
+import com.example.recipeapp.navigation.Screens
 import com.example.recipeapp.ui.theme.Background
 import com.example.recipeapp.ui.theme.BlackText
 import kotlinx.coroutines.delay
 
-@Preview
 @Composable
 fun SplashScreen(
-//    navController: NavController
+    navController: NavController
 ){
     var isVisible by remember {
         mutableStateOf(false)
@@ -133,7 +133,7 @@ fun SplashScreen(
            }
        ){
            Button(
-               onClick = { /*TODO*/ },
+               onClick = { navController.navigate(Screens.HomeScreen.name) },
                shape = RoundedCornerShape(8.dp),
                colors = ButtonDefaults.buttonColors(backgroundColor = BlackText),
                modifier = Modifier
