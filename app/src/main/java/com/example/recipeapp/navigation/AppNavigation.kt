@@ -6,17 +6,21 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.recipeapp.screens.HomeScreen
+import com.example.recipeapp.screens.LatestScreen
 import com.example.recipeapp.screens.SplashScreen
 
 @Composable
 fun AppNavigation(){
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = Screens.SplashScreen.name ){
+    NavHost(navController = navController, startDestination = Screens.LatestScreen.name ){
         composable(route = Screens.SplashScreen.name){
             SplashScreen(navController)
         }
         composable(route = Screens.HomeScreen.name){
             HomeScreen(navController)
+        }
+        composable(route = Screens.LatestScreen.name){
+            LatestScreen(navController)
         }
     }
 }
