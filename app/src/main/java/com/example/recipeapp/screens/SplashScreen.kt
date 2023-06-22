@@ -60,9 +60,9 @@ fun SplashScreen(
     LaunchedEffect(key1 = 1, block = {
         delay(100)
         isLogoVisible=!isLogoVisible
-        delay(500)
+        delay(400)
         isButtonVisible=!isButtonVisible
-        delay(900)
+        delay(800)
         isVisible=!isVisible
     })
    Column(
@@ -93,7 +93,7 @@ fun SplashScreen(
        AnimatedVisibility(
            visible = isVisible,
            enter = fadeIn() + slideInVertically(
-               animationSpec = tween(durationMillis = 500, easing = LinearEasing)
+               animationSpec = tween(durationMillis = 300, easing = LinearEasing)
            ) {
                it/4
            }
@@ -127,7 +127,7 @@ fun SplashScreen(
        AnimatedVisibility(
            visible = isButtonVisible,
            enter = fadeIn() + slideInVertically(
-               animationSpec = tween(durationMillis = 500, easing = LinearEasing)
+               animationSpec = tween(durationMillis = 300, easing = LinearEasing)
            ){
                it/2
            }
