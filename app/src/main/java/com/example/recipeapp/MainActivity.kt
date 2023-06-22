@@ -33,6 +33,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
+import com.example.recipeapp.navigation.AppNavigation
 import com.example.recipeapp.ui.theme.RecipeAppTheme
 import kotlin.math.roundToInt
 
@@ -44,7 +45,7 @@ class MainActivity : ComponentActivity() {
             RecipeAppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-
+                    AppNavigation()
                 }
             }
         }
