@@ -106,7 +106,7 @@ fun LatestContent(isVisible: Boolean, listRecipes: List<Meal>) {
             columns = GridCells.Fixed(2),
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 18.dp, end = 18.dp, bottom = 25.dp)
+                .padding(start = 18.dp, end = 18.dp, bottom = 90.dp)
         ){
             itemsIndexed(
                 listRecipes,

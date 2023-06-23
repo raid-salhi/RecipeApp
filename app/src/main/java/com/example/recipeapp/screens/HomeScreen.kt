@@ -84,7 +84,7 @@ fun HomeScreen(navController: NavController){
 fun MainContent(isVisible: Boolean, navController: NavController) {
     Column(modifier = Modifier
         .fillMaxSize()
-        .padding(25.dp)
+        .padding(bottom = 80.dp, top = 25.dp, end = 25.dp, start = 25.dp)
         .verticalScroll(rememberScrollState())) {
         AnimatedVisibility(
             visible = isVisible,
