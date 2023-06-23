@@ -45,6 +45,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.recipeapp.R
+import com.example.recipeapp.componants.MyBottomBar
 import com.example.recipeapp.screens.HomeScreen
 import com.example.recipeapp.screens.LatestScreen
 import com.example.recipeapp.screens.SplashScreen
@@ -89,82 +90,4 @@ fun AppNavigation(){
         }
 
 }
-
-@Composable
-fun MyBottomBar(navController: NavController) {
-    Surface(
-        shape = RoundedCornerShape(10.dp),
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp)
-            .padding(15.dp),
-        elevation = 10.dp,
-        color = Color.Transparent
-    ) {
-        BottomAppBar(
-            backgroundColor = Color.White,
-            contentColor = Color(0x731C0F13),
-            cutoutShape = RoundedCornerShape(10.dp),
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            val items = listOf(
-                BottomNavItem.Home,
-                BottomNavItem.Latest,
-                BottomNavItem.Cooking,
-                BottomNavItem.Settings,
-            )
-            val navBackStackEntry by navController.currentBackStackEntryAsState()
-            val currentDestination=navBackStackEntry?.destination
-            Row(
-                modifier = Modifier
-                    .padding(start = 10.dp, end = 10.dp, top = 8.dp, bottom = 8.dp)
-                    .background(Color.Transparent)
-                    .fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ){
-                items.forEach { item ->
-                    BottomNavigationItemCustom(
-                        selected = item.screen_route== currentDestination?.route,
-                        onClick = {
-                            navController.navigate(item.screen_route) {
-                                popUpTo(navController.graph.findStartDestination().id)
-                                launchSingleTop = true
-                            }
-                        },
-                        item = item
-                    )
-                }
-            }
-
-        }
-    }
-
-}
-@Composable
-fun BottomNavigationItemCustom(selected: Boolean, onClick: () -> Unit, item: BottomNavItem) {
-    Box(
-        modifier = Modifier
-            .size(70.dp)
-            .clip(RoundedCornerShape(10.dp))
-            .background(if (selected) BlackText else Color.Transparent)
-            .clickable { onClick() }
-    ) {
-      Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-          .padding(5.dp)
-          .align(
-              Alignment.Center
-          )) {
-          Icon(painter = painterResource(id = item.icon), contentDescription = null , tint = if (selected) Color.White else Color(0x731C0F13))
-          Text(
-              text = item.title,
-              fontSize = 12.sp,
-              fontFamily = FontFamily(Font(R.font.nunito_light)),
-                  color =  if (selected) Color.White else Color(0x731C0F13),
-          )
-      }
-    }
-}
-
 

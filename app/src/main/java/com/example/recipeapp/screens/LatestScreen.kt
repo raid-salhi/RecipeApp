@@ -49,6 +49,8 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.recipeapp.R
+import com.example.recipeapp.componants.MyTopBarLatest
+import com.example.recipeapp.componants.RecipeItemCard
 import com.example.recipeapp.model.Meal
 import com.example.recipeapp.model.Recipes
 import com.example.recipeapp.ui.theme.Background
@@ -124,81 +126,4 @@ fun LatestContent(isVisible: Boolean, listRecipes: List<Meal>) {
 
 }
 
-@Composable
-fun RecipeItemCard(index: Int, item: Meal) {
-    Card(
-        colors = CardDefaults.cardColors(containerColor = Color.White),
-        modifier = Modifier
-            .padding(
-                top = if (index.mod(2) != 0) 40.dp else 0.dp,
-                bottom = 0.dp,
-                start = 8.dp,
-                end = 8.dp
-            )
-            .fillMaxWidth(),
-    ) {
-        Column(modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp)) {
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(item.strMealThumb)
-                    .crossfade(true)
-                    .build(),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                placeholder = painterResource(id = R.drawable.placeholder1),
-                modifier = Modifier.clip(shape = RoundedCornerShape(5.dp))
-            )
-            Text(
-                text = item.strMeal,
-                fontSize = 16.sp,
-                fontFamily = FontFamily(Font(R.font.worksans_medium)),
-                color = BlackText,
-                modifier = Modifier.padding(top = 10.dp),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Text(
-                text = item.strCategory +" / "+ item.strArea,
-                fontSize = 14.sp,
-                fontFamily = FontFamily(Font(R.font.nunito_light)),
-                color = Color(0x731C0F13),
-                modifier= Modifier.padding(top = 10.dp)
-            )
-            TimeRow(modifier = Modifier.padding(top = 50.dp))
-        }
-    }
-}
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MyTopBarLatest(navController: NavController,isVisible: Boolean) {
-    AnimatedVisibility(
-        visible = isVisible,
-        enter = fadeIn() + slideInVertically {
-            it
-        }
-    ){
-        CenterAlignedTopAppBar(
-            title = {
-                Text(
-                    text = "Latest Recipes",
-                    fontSize = 24.sp,
-                    fontFamily = FontFamily(Font(R.font.worksans_semibold)),
-                    color = BlackText
-            ) },
-            navigationIcon = {
-                IconButton(onClick = {navController.popBackStack() }) {
-                    Icon(
-                        imageVector = Icons.Default.ArrowBack,
-                        contentDescription = null,
-                        tint = BlackText
-                    )
-                }
-            },
-            modifier = Modifier.padding(20.dp),
-            colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = Background)
-        )
-    }
-}
