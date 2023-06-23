@@ -35,8 +35,9 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import com.example.recipeapp.navigation.AppNavigation
 import com.example.recipeapp.ui.theme.RecipeAppTheme
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.roundToInt
-
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @OptIn(ExperimentalComposeApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {

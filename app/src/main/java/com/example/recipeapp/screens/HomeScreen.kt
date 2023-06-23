@@ -1,7 +1,6 @@
 package com.example.recipeapp.screens
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInHorizontally
@@ -76,13 +75,13 @@ fun HomeScreen(navController: NavController){
         Surface(modifier = Modifier
             .fillMaxWidth()
             .padding(it), color = Background) {
-            MainContent(isVisible)
+            MainContent(isVisible,navController)
         }
     }
 }
 
 @Composable
-fun MainContent(isVisible :Boolean) {
+fun MainContent(isVisible: Boolean, navController: NavController) {
     Column(modifier = Modifier
         .fillMaxSize()
         .padding(25.dp)
@@ -111,7 +110,9 @@ fun MainContent(isVisible :Boolean) {
                 HeadingText(firstText = "René Redzepi", secondText ="recommends you" ,Modifier.padding(top = 50.dp))
                 RecommendationBox()
                 Button(
-                    onClick = { },
+                    onClick = {
+                              navController.navigate(Screens.LatestScreen.name)
+                    },
                     shape = RoundedCornerShape(8.dp),
                     colors = ButtonDefaults.buttonColors(backgroundColor = Background),
                     border = BorderStroke(width = 1.5.dp, BlackText),
