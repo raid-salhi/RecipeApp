@@ -2,7 +2,7 @@ package com.example.recipeapp.navigation
 
 import com.example.recipeapp.R
 
-
+const val meal = "meal"
 sealed class BottomNavItem(var title:String, var icon:Int, var screen_route:String){
 
     object Home : BottomNavItem("Inspirations", R.drawable.idea,Screens.HomeScreen.name)

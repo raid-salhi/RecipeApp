@@ -108,7 +108,7 @@ fun RecipeItemCard(index: Int, item: Meal) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyTopBarLatest(navController: NavController, isVisible: Boolean) {
+fun MyTopBarCustom(navController: NavController, isVisible: Boolean, title: String) {
     AnimatedVisibility(
         visible = isVisible,
         enter = fadeIn() + slideInVertically {
@@ -118,7 +118,7 @@ fun MyTopBarLatest(navController: NavController, isVisible: Boolean) {
         CenterAlignedTopAppBar(
             title = {
                 Text(
-                    text = "Latest Recipes",
+                    text = title,
                     fontSize = 24.sp,
                     fontFamily = FontFamily(Font(R.font.worksans_semibold)),
                     color = BlackText
@@ -173,7 +173,7 @@ fun MyBottomBar(navController: NavController) {
             ){
                 items.forEach { item ->
                     BottomNavigationItemCustom(
-                        selected = item.screen_route== currentDestination?.route,
+                        selected = item.screen_route== currentDestination?.route?.split("?")?.get(0),
                         onClick = {
                             navController.navigate(item.screen_route) {
                                 popUpTo(navController.graph.findStartDestination().id)
