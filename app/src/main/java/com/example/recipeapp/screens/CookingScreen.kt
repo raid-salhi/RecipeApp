@@ -1,5 +1,10 @@
 package com.example.recipeapp.screens
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -12,9 +17,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -43,9 +45,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
@@ -54,13 +54,12 @@ import com.example.recipeapp.R
 import com.example.recipeapp.componants.BrowseButton
 import com.example.recipeapp.componants.HeadingText
 import com.example.recipeapp.componants.MyTopBarCustom
-import com.example.recipeapp.componants.TimeRow
 import com.example.recipeapp.model.Ingredient
 import com.example.recipeapp.model.Meal
 import com.example.recipeapp.model.Recipes
 import com.example.recipeapp.ui.theme.Background
 import com.example.recipeapp.ui.theme.BlackText
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -68,9 +67,20 @@ fun CookingScreen(navController: NavHostController, meal: String?,cookingScreenV
     var item by remember {
         mutableStateOf(Recipes(emptyList()))
     }
+    var isVisible by remember {
+        mutableStateOf(false)
+    }
+    var isVisible1 by remember {
+        mutableStateOf(false)
+    }
+    LaunchedEffect(key1 = 3, block = {
+        delay(200)
+        isVisible=!isVisible
+    })
+
     Scaffold (
         topBar = {
-            MyTopBarCustom(navController = navController, isVisible = true, title = "Cooking Time!" )
+            MyTopBarCustom(navController = navController, isVisible = isVisible, title = "Cooking Time!" )
         },
         containerColor = Background
             ) {
@@ -84,9 +94,15 @@ fun CookingScreen(navController: NavHostController, meal: String?,cookingScreenV
                }
            })
             if (item.meals.isEmpty())
-                RedirectionScreen(paddingValues = it, navController = navController)
-            else
-                CookingContent(it = it, meal = item.meals.first())
+                LinearProgressIndicator(modifier = Modifier.padding(it))
+            else{
+                LaunchedEffect(key1 = 8, block = {
+                    delay(200)
+                    isVisible1=!isVisible1
+                })
+                CookingContent(it = it, meal = item.meals.first(),isVisible = isVisible1)
+            }
+
         }
 
 
@@ -94,7 +110,7 @@ fun CookingScreen(navController: NavHostController, meal: String?,cookingScreenV
 }
 
 @Composable
-fun CookingContent(it: PaddingValues,meal : Meal) {
+fun CookingContent(it: PaddingValues, meal: Meal, isVisible: Boolean) {
     Surface (
         modifier = Modifier
             .fillMaxSize()
@@ -109,31 +125,42 @@ fun CookingContent(it: PaddingValues,meal : Meal) {
                 ),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            RecipeDetailsCard(meal)
-            HeadingText(firstText = "Ingredients", secondText = "")
-            IngredientsBox(meal)
+            RecipeDetailsCard(meal,isVisible)
+            IngredientsBox(meal,isVisible)
         }
     }
 }
 
 @Composable
-fun IngredientsBox(meal: Meal) {
+fun IngredientsBox(meal: Meal, isVisible: Boolean) {
     val listOfIngredients = filteredList(meal)
-    Surface(
-        modifier = Modifier
-            .padding(top = 0.dp, bottom = 85.dp)
-            .fillMaxWidth(),
-        color = Background
-    ){
-        Column {
-            listOfIngredients.forEach{ it ->
-                Box(modifier = Modifier.padding(5.dp)) {
-                    IngredientRow(ingredient = it)
-                }
+    AnimatedVisibility(
+        visible = isVisible,
+        enter = fadeIn(
+            tween(delayMillis = 100)
+        ) + slideInHorizontally(
+            tween(delayMillis = 100)
+        ){
+            - it/2
+        }){
+        HeadingText(firstText = "Ingredients", secondText = "")
+        Surface(
+            modifier = Modifier
+                .padding(top = 0.dp, bottom = 85.dp)
+                .fillMaxWidth(),
+            color = Background
+        ){
+            Column {
+                listOfIngredients.forEach{ it ->
+                    Box(modifier = Modifier.padding(5.dp)) {
+                        IngredientRow(ingredient = it)
+                    }
 
+                }
             }
         }
     }
+
     
 }
 
@@ -288,58 +315,69 @@ fun filteredList(meal: Meal): ArrayList<Ingredient> {
 }
 
 @Composable
-fun RecipeDetailsCard(meal: Meal) {
+fun RecipeDetailsCard(meal: Meal, isVisible: Boolean) {
     var isExpanded by remember {
         mutableStateOf(false)
     }
-    Surface(
-        modifier = Modifier
-            .padding(bottom = 15.dp)
-            .fillMaxWidth(),
-        shape = RoundedCornerShape(8.dp),
-        color = Color.White
-    ) {
-        Column(
+    AnimatedVisibility(
+        visible = isVisible,
+        enter = fadeIn(
+            tween(delayMillis = 100)
+        ) + slideInHorizontally(
+            tween(delayMillis = 100)
+        ){
+            - it/2
+        }){
+
+        Surface(
             modifier = Modifier
-                .padding(25.dp)
+                .padding(bottom = 15.dp)
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(8.dp),
+            color = Color.White
         ) {
-            Text(
-                text = meal.strMeal,
-                fontSize = 18.sp,
-                fontFamily = FontFamily(Font(R.font.worksans_medium)),
-                color = BlackText,
-                textAlign = TextAlign.Center,
+            Column(
                 modifier = Modifier
-                    .padding(bottom = 15.dp)
-                    .fillMaxWidth()
+                    .padding(25.dp)
+            ) {
+                Text(
+                    text = meal.strMeal,
+                    fontSize = 18.sp,
+                    fontFamily = FontFamily(Font(R.font.worksans_medium)),
+                    color = BlackText,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier
+                        .padding(bottom = 15.dp)
+                        .fillMaxWidth()
 
-            )
-            AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(meal.strMealThumb)
-                    .crossfade(true)
-                    .build(),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                placeholder = painterResource(id = R.drawable.placeholder1),
-                modifier = Modifier.clip(shape = RoundedCornerShape(5.dp))
-            )
+                )
+                AsyncImage(
+                    model = ImageRequest.Builder(LocalContext.current)
+                        .data(meal.strMealThumb)
+                        .crossfade(true)
+                        .build(),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    placeholder = painterResource(id = R.drawable.placeholder1),
+                    modifier = Modifier.clip(shape = RoundedCornerShape(5.dp))
+                )
 
-            androidx.compose.material3.Text(
-                text = meal.strInstructions,
-                fontSize = 16.sp,
-                fontWeight = FontWeight.Light,
-                color = BlackText,
-                maxLines = if (!isExpanded) 4 else 100,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier
-                    .padding(top = 15.dp, bottom = 25.dp)
-                    .fillMaxWidth()
-                    .clickable {
-                        isExpanded = !isExpanded
-                    }
-            )
+                androidx.compose.material3.Text(
+                    text = meal.strInstructions,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.Light,
+                    color = BlackText,
+                    maxLines = if (!isExpanded) 4 else 100,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier
+                        .padding(top = 15.dp, bottom = 25.dp)
+                        .fillMaxWidth()
+                        .clickable {
+                            isExpanded = !isExpanded
+                        }
+                )
 
+            }
         }
     }
 
