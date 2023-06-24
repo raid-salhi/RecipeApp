@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.recipeapp.R
+import com.example.recipeapp.componants.BrowseButton
 import com.example.recipeapp.componants.CheckUpdatesBox
 import com.example.recipeapp.componants.CockLikeProBox
 import com.example.recipeapp.componants.HeadingText
@@ -101,28 +102,9 @@ fun MainContent(isVisible: Boolean, navController: NavController) {
             Column(modifier = Modifier.fillMaxSize()) {
                 HeadingText(firstText = "René Redzepi", secondText ="recommends you" ,Modifier.padding(top = 50.dp))
                 RecommendationBox()
-                Button(
-                    onClick = {
-                              navController.navigate(Screens.LatestScreen.name)
-                    },
-                    shape = RoundedCornerShape(8.dp),
-                    colors = ButtonDefaults.buttonColors(backgroundColor = Background),
-                    border = BorderStroke(width = 1.5.dp, BlackText),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(70.dp)
-                        .padding(bottom = 25.dp)
-                ) {
-                    Text(
-                        text = "Browse more recipes",
-                        color= BlackText,
-                        fontSize = 18.sp,
-                        fontFamily = FontFamily(Font(R.font.worksans_semibold))
-                    )
-                }
+                BrowseButton(navController)
             }
 
         }
     }
 }
-

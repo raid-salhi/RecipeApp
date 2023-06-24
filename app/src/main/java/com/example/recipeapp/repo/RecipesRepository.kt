@@ -6,4 +6,5 @@ import javax.inject.Inject
 
 class RecipesRepository @Inject constructor(private val apiInterface: ApiInterface) {
     suspend fun getAllRecipesByLetter(letter : String):Recipes = apiInterface.getAllRecipesByLetter(letter)
+    suspend fun getRecipeByName(meal : String) : Recipes = apiInterface.getRecipeByName(meal)
 }

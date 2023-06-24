@@ -62,7 +62,7 @@ fun LatestScreen(navController: NavController,latestScreenViewModel: LatestScree
                     delay(200)
                     isLoaded = !isLoaded
                 })
-                LatestContent(isLoaded, list.value.meals)
+                LatestContent(isLoaded, list.value.meals, navController = navController)
             }
         }
     }
@@ -70,7 +70,7 @@ fun LatestScreen(navController: NavController,latestScreenViewModel: LatestScree
 }
 
 @Composable
-fun LatestContent(isVisible: Boolean, listRecipes: List<Meal>) {
+fun LatestContent(isVisible: Boolean, listRecipes: List<Meal>,navController: NavController) {
     AnimatedVisibility(
         visible = isVisible,
         enter = fadeIn() + slideInVertically {
@@ -90,7 +90,7 @@ fun LatestContent(isVisible: Boolean, listRecipes: List<Meal>) {
                 }
             ) { index, item ->
 
-                RecipeItemCard(index,item)
+                RecipeItemCard(index,item, navController = navController)
             }
         }
     }

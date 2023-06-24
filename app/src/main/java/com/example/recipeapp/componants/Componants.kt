@@ -3,6 +3,7 @@ package com.example.recipeapp.componants
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,6 +18,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomAppBar
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -56,11 +59,12 @@ import coil.request.ImageRequest
 import com.example.recipeapp.R
 import com.example.recipeapp.model.Meal
 import com.example.recipeapp.navigation.BottomNavItem
+import com.example.recipeapp.navigation.Screens
 import com.example.recipeapp.ui.theme.Background
 import com.example.recipeapp.ui.theme.BlackText
 
 @Composable
-fun RecipeItemCard(index: Int, item: Meal) {
+fun RecipeItemCard(index: Int, item: Meal,navController: NavController) {
     Card(
         colors = CardDefaults.cardColors(containerColor = Color.White),
         modifier = Modifier
@@ -70,7 +74,13 @@ fun RecipeItemCard(index: Int, item: Meal) {
                 start = 8.dp,
                 end = 8.dp
             )
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable {
+                       navController.navigate(Screens.CookingScreen.name + "?meal={meal}".replace(
+                           oldValue = "{meal}",
+                           newValue = item.strMeal
+                       ))
+            },
     ) {
         Column(modifier = Modifier
             .fillMaxWidth()
@@ -417,3 +427,26 @@ fun MyTopBar(isVisible:Boolean) {
     }
 
 }
+@Composable
+fun BrowseButton(navController: NavController) {
+    Button(
+        onClick = {
+            navController.navigate(Screens.LatestScreen.name)
+        },
+        shape = RoundedCornerShape(8.dp),
+        colors = ButtonDefaults.buttonColors(backgroundColor = Background),
+        border = BorderStroke(width = 1.5.dp, BlackText),
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(70.dp)
+            .padding(bottom = 25.dp)
+    ) {
+        Text(
+            text = "Browse more recipes",
+            color = BlackText,
+            fontSize = 18.sp,
+            fontFamily = FontFamily(Font(R.font.worksans_semibold))
+        )
+    }
+}
+
