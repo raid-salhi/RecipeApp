@@ -248,7 +248,7 @@ fun RecommendationBox(navController: NavController) {
                 painter = painterResource(id = R.drawable.placeholder3),
                 contentDescription = null,
                 modifier = Modifier.fillMaxWidth(),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Fit
             )
             Text(
                 text = "Vegan Lasagna",
@@ -356,7 +356,7 @@ fun RecipeOfTheDayBox(navController: NavController) {
                 painter = painterResource(id = R.drawable.placeholder),
                 contentDescription = null,
                 modifier = Modifier.fillMaxWidth(),
-                contentScale = ContentScale.Crop
+                contentScale = ContentScale.Fit
             )
         }
     }
