@@ -87,7 +87,7 @@ fun MainContent(isVisible: Boolean, navController: NavController) {
             Row(modifier = Modifier
                 .fillMaxWidth()
                 .horizontalScroll(rememberScrollState())) {
-                RecipeOfTheDayBox()
+                RecipeOfTheDayBox(navController)
                 Column(modifier = Modifier.padding(start = 15.dp, top = 30.dp)) {
                     CockLikeProBox()
                     CheckUpdatesBox(Modifier.padding(top=15.dp))
@@ -101,7 +101,7 @@ fun MainContent(isVisible: Boolean, navController: NavController) {
             ) ){
             Column(modifier = Modifier.fillMaxSize()) {
                 HeadingText(firstText = "René Redzepi", secondText ="recommends you" ,Modifier.padding(top = 50.dp))
-                RecommendationBox()
+                RecommendationBox(navController)
                 BrowseButton(navController)
             }
 

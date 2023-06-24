@@ -226,11 +226,17 @@ fun BottomNavigationItemCustom(selected: Boolean, onClick: () -> Unit, item: Bot
 
 
 @Composable
-fun RecommendationBox() {
+fun RecommendationBox(navController: NavController) {
     androidx.compose.material3.Surface(
         modifier = Modifier
             .padding(top = 15.dp, bottom = 15.dp)
-            .fillMaxWidth(),
+            .fillMaxWidth()
+            .clickable {
+                navController.navigate(Screens.CookingScreen.name + "?meal={meal}".replace(
+                    oldValue = "{meal}",
+                    newValue = "Vegan Lasagna"
+                ))
+            },
         shape = RoundedCornerShape(8.dp),
         color = Color.White
     ) {
@@ -239,13 +245,13 @@ fun RecommendationBox() {
                 .padding(25.dp)
         ) {
             Image(
-                painter = painterResource(id = R.drawable.placeholder),
+                painter = painterResource(id = R.drawable.placeholder3),
                 contentDescription = null,
                 modifier = Modifier.fillMaxWidth(),
                 contentScale = ContentScale.Crop
             )
             Text(
-                text = "Vegan Thai Curry Soup",
+                text = "Vegan Lasagna",
                 fontSize = 18.sp,
                 fontFamily = FontFamily(Font(R.font.worksans_medium)),
                 color = BlackText,
@@ -316,10 +322,16 @@ fun CheckUpdatesBox(modifier: Modifier) {
 }
 
 @Composable
-fun RecipeOfTheDayBox() {
+fun RecipeOfTheDayBox(navController: NavController) {
     androidx.compose.material3.Surface(
         modifier = Modifier
-            .width(280.dp),
+            .width(280.dp)
+            .clickable {
+                navController.navigate(Screens.CookingScreen.name + "?meal={meal}".replace(
+                    oldValue = "{meal}",
+                    newValue = "Bigos (Hunters Stew)"
+                ))
+            },
         shape = RoundedCornerShape(8.dp),
         color = Color.White
     ) {
@@ -333,7 +345,7 @@ fun RecipeOfTheDayBox() {
                 modifier = Modifier.padding(top = 50.dp)
             )
             Text(
-                text = "Roasted Pumpkin Soup",
+                text = "Bigos (Hunters Stew)",
                 fontSize = 16.sp,
                 fontFamily = FontFamily(Font(R.font.worksans_medium)),
                 color = BlackText,
