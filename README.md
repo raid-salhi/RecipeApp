@@ -12,5 +12,5 @@ Api Used :
 - [The Meal DB api](https://www.themealdb.com/api.php)
 
 ## App Image :
-![c](https://github.com/raid-salhi/RecipeApp/assets/118809948/a07e3247-1d32-4ca2-990a-fa4bdef077dd)
 
+![c](https://github.com/raid-salhi/RecipeApp/assets/118809948/44731b00-dc70-4ff2-a748-f9b731df7fc1)
